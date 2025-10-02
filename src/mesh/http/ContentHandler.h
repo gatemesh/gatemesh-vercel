@@ -21,6 +21,11 @@ void handleAdmin(HTTPRequest *req, HTTPResponse *res);
 void handleAdminSettings(HTTPRequest *req, HTTPResponse *res);
 void handleAdminSettingsApply(HTTPRequest *req, HTTPResponse *res);
 
+// Adaptive Power Control API endpoints
+void handleAdaptivePowerStatus(HTTPRequest *req, HTTPResponse *res);
+void handleAdaptivePowerConfig(HTTPRequest *req, HTTPResponse *res);
+void handleAdaptivePowerHistory(HTTPRequest *req, HTTPResponse *res);
+
 // Interface to the PhoneAPI to access the protobufs with messages
 class HttpAPI : public PhoneAPI
 {

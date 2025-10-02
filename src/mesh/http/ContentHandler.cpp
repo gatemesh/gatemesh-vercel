@@ -13,6 +13,7 @@
 #include "SPILock.h"
 #include "power.h"
 #include "serialization/JSON.h"
+#include "modules/AdaptivePowerModule.h"
 #include <FSCommon.h>
 #include <HTTPBodyParser.hpp>
 #include <HTTPMultipartBodyParser.hpp>
@@ -98,6 +99,15 @@ void registerHandlers(HTTPServer *insecureServer, HTTPSServer *secureServer)
     ResourceNode *nodeJsonFsBrowseStatic = new ResourceNode("/json/fs/browse/static", "GET", &handleFsBrowseStatic);
     ResourceNode *nodeJsonDelete = new ResourceNode("/json/fs/delete/static", "DELETE", &handleFsDeleteStatic);
 
+    // Adaptive Power Control endpoints
+    ResourceNode *nodeAdaptivePowerStatus = new ResourceNode("/api/v1/adaptivepower/status", "GET", &handleAdaptivePowerStatus);
+    ResourceNode *nodeAdaptivePowerStatusOptions = new ResourceNode("/api/v1/adaptivepower/status", "OPTIONS", &handleAdaptivePowerStatus);
+    ResourceNode *nodeAdaptivePowerConfig = new ResourceNode("/api/v1/adaptivepower/config", "GET", &handleAdaptivePowerConfig);
+    ResourceNode *nodeAdaptivePowerConfigPost = new ResourceNode("/api/v1/adaptivepower/config", "POST", &handleAdaptivePowerConfig);
+    ResourceNode *nodeAdaptivePowerConfigOptions = new ResourceNode("/api/v1/adaptivepower/config", "OPTIONS", &handleAdaptivePowerConfig);
+    ResourceNode *nodeAdaptivePowerHistory = new ResourceNode("/api/v1/adaptivepower/history", "GET", &handleAdaptivePowerHistory);
+    ResourceNode *nodeAdaptivePowerHistoryOptions = new ResourceNode("/api/v1/adaptivepower/history", "OPTIONS", &handleAdaptivePowerHistory);
+
     ResourceNode *nodeRoot = new ResourceNode("/*", "GET", &handleStatic);
 
     // Secure nodes
@@ -115,6 +125,16 @@ void registerHandlers(HTTPServer *insecureServer, HTTPSServer *secureServer)
     secureServer->registerNode(nodeJsonDelete);
     secureServer->registerNode(nodeJsonReport);
     secureServer->registerNode(nodeJsonNodes);
+    
+    // Adaptive Power Control endpoints
+    secureServer->registerNode(nodeAdaptivePowerStatus);
+    secureServer->registerNode(nodeAdaptivePowerStatusOptions);
+    secureServer->registerNode(nodeAdaptivePowerConfig);
+    secureServer->registerNode(nodeAdaptivePowerConfigPost);
+    secureServer->registerNode(nodeAdaptivePowerConfigOptions);
+    secureServer->registerNode(nodeAdaptivePowerHistory);
+    secureServer->registerNode(nodeAdaptivePowerHistoryOptions);
+    
     //    secureServer->registerNode(nodeUpdateFs);
     //    secureServer->registerNode(nodeDeleteFs);
     secureServer->registerNode(nodeAdmin);
@@ -137,6 +157,16 @@ void registerHandlers(HTTPServer *insecureServer, HTTPSServer *secureServer)
     insecureServer->registerNode(nodeJsonFsBrowseStatic);
     insecureServer->registerNode(nodeJsonDelete);
     insecureServer->registerNode(nodeJsonReport);
+    
+    // Adaptive Power Control endpoints
+    insecureServer->registerNode(nodeAdaptivePowerStatus);
+    insecureServer->registerNode(nodeAdaptivePowerStatusOptions);
+    insecureServer->registerNode(nodeAdaptivePowerConfig);
+    insecureServer->registerNode(nodeAdaptivePowerConfigPost);
+    insecureServer->registerNode(nodeAdaptivePowerConfigOptions);
+    insecureServer->registerNode(nodeAdaptivePowerHistory);
+    insecureServer->registerNode(nodeAdaptivePowerHistoryOptions);
+    
     //    insecureServer->registerNode(nodeUpdateFs);
     //    insecureServer->registerNode(nodeDeleteFs);
     insecureServer->registerNode(nodeAdmin);
@@ -984,5 +1014,152 @@ void handleScanNetworks(HTTPRequest *req, HTTPResponse *res)
     for (auto *val : networkObjs) {
         delete val;
     }
+}
+
+/*
+ * Adaptive Power Control API Endpoints for GateMesh
+ */
+void handleAdaptivePowerStatus(HTTPRequest *req, HTTPResponse *res)
+{
+    res->setHeader("Content-Type", "application/json");
+    res->setHeader("Access-Control-Allow-Origin", "*");
+    res->setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res->setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req->getMethod() == "OPTIONS") {
+        res->setStatusCode(204);
+        return;
+    }
+
+    char statusBuffer[512];
+    if (adaptivePowerModule) {
+        adaptivePowerModule->getStatusJSON(statusBuffer, sizeof(statusBuffer));
+    } else {
+        snprintf(statusBuffer, sizeof(statusBuffer), 
+            "{\"error\":\"Adaptive Power Module not initialized\"}");
+    }
+
+    res->print(statusBuffer);
+}
+
+void handleAdaptivePowerConfig(HTTPRequest *req, HTTPResponse *res)
+{
+    res->setHeader("Content-Type", "application/json");
+    res->setHeader("Access-Control-Allow-Origin", "*");
+    res->setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res->setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req->getMethod() == "OPTIONS") {
+        res->setStatusCode(204);
+        return;
+    }
+
+    if (!adaptivePowerModule) {
+        res->setStatusCode(500);
+        res->print("{\"error\":\"Adaptive Power Module not initialized\"}");
+        return;
+    }
+
+    if (req->getMethod() == "GET") {
+        // Return current configuration
+        char configBuffer[256];
+        snprintf(configBuffer, sizeof(configBuffer),
+            "{"
+            "\"mode\":\"%s\","
+            "\"enabled\":%s,"
+            "\"current_power\":%d,"
+            "\"base_power\":%d"
+            "}",
+            adaptivePowerModule->getModeString(),
+            adaptivePowerModule->isAdaptivePowerEnabled() ? "true" : "false",
+            adaptivePowerModule->getCurrentAdaptivePower(),
+            config.lora.tx_power
+        );
+        res->print(configBuffer);
+    } else if (req->getMethod() == "POST") {
+        // Update configuration
+        HTTPBodyParser *parser = new HTTPURLEncodedBodyParser(req);
+        
+        if (parser->nextField()) {
+            std::string fieldName = parser->getFieldName();
+            std::string fieldValue = parser->getFieldValue();
+            
+            if (fieldName == "mode") {
+                int mode = atoi(fieldValue.c_str());
+                if (mode >= 0 && mode <= 4) {
+                    adaptivePowerModule->setAdaptivePowerMode((AdaptivePowerMode)mode);
+                    res->print("{\"success\":true,\"message\":\"Adaptive power mode updated\"}");
+                } else {
+                    res->setStatusCode(400);
+                    res->print("{\"error\":\"Invalid mode value\"}");
+                }
+            } else if (fieldName == "force_recalculate") {
+                adaptivePowerModule->forceRecalculatePower();
+                res->print("{\"success\":true,\"message\":\"Power recalculation forced\"}");
+            } else if (fieldName == "reset") {
+                adaptivePowerModule->resetToBasePower();
+                res->print("{\"success\":true,\"message\":\"Power reset to base setting\"}");
+            } else {
+                res->setStatusCode(400);
+                res->print("{\"error\":\"Unknown field\"}");
+            }
+        } else {
+            res->setStatusCode(400);
+            res->print("{\"error\":\"No field data received\"}");
+        }
+        
+        delete parser;
+    }
+}
+
+void handleAdaptivePowerHistory(HTTPRequest *req, HTTPResponse *res)
+{
+    res->setHeader("Content-Type", "application/json");
+    res->setHeader("Access-Control-Allow-Origin", "*");
+    res->setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res->setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req->getMethod() == "OPTIONS") {
+        res->setStatusCode(204);
+        return;
+    }
+
+    if (!adaptivePowerModule) {
+        res->setStatusCode(500);
+        res->print("{\"error\":\"Adaptive Power Module not initialized\"}");
+        return;
+    }
+
+    const PowerAdjustmentHistory* history = adaptivePowerModule->getPowerHistory();
+    uint8_t count = adaptivePowerModule->getHistoryCount();
+    
+    res->print("{\"history\":[");
+    
+    for (int i = 0; i < count; i++) {
+        if (history[i].timestamp != 0) {
+            if (i > 0) res->print(",");
+            
+            char entryBuffer[256];
+            snprintf(entryBuffer, sizeof(entryBuffer),
+                "{"
+                "\"timestamp\":%lu,"
+                "\"old_power\":%d,"
+                "\"new_power\":%d,"
+                "\"avg_rssi\":%.1f,"
+                "\"neighbor_count\":%d,"
+                "\"reason\":\"%s\""
+                "}",
+                history[i].timestamp,
+                history[i].old_power,
+                history[i].new_power,
+                history[i].avg_neighbor_rssi,
+                history[i].neighbor_count,
+                history[i].reason ? history[i].reason : "Unknown"
+            );
+            res->print(entryBuffer);
+        }
+    }
+    
+    res->print("]}");
 }
 #endif

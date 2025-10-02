@@ -80,6 +80,7 @@
 #if !MESHTASTIC_EXCLUDE_GENERIC_THREAD_MODULE
 #include "modules/GenericThreadModule.h"
 #endif
+#include "modules/AdaptivePowerModule.h"
 
 #ifdef ARCH_ESP32
 #if defined(USE_SX1280) && !MESHTASTIC_EXCLUDE_AUDIO
@@ -173,6 +174,10 @@ void setupModules()
 #if !MESHTASTIC_EXCLUDE_POWERSTRESS
         new PowerStressModule();
 #endif
+        
+        // GateMesh Adaptive Power Control Module
+        adaptivePowerModule = new AdaptivePowerModule();
+        
         // Example: Put your module here
         // new ReplyModule();
 #if (HAS_BUTTON || ARCH_PORTDUINO) && !MESHTASTIC_EXCLUDE_INPUTBROKER
