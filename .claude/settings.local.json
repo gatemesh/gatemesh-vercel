@@ -28,7 +28,12 @@
       "Bash(\"C:\\Users\\justi\\.platformio\\packages\\tool-esptoolpy\\esptool.py\" --chip esp32s3 --port COM14 --baud 460800 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 \"C:\\Users\\justi\\OneDrive\\Documents\\PlatformIO\\firmware\\.pio\\build\\seeed_xiao_esp32s3\\firmware.factory.bin\")",
       "Bash(awk:*)",
       "Bash(\"C:\\Users\\justi\\.platformio\\packages\\tool-esptoolpy\\esptool.py\" --chip esp32s3 --port COM5 --baud 460800 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 \".pio/build/seeed_xiao_esp32s3/firmware.factory.bin\")",
-      "Bash(pnpm --filter web dev)"
+      "Bash(pnpm --filter web dev)",
+      "Read(//c/Users/justi/OneDrive/Documents/PlatformIO/**)",
+      "Bash(git clone:*)",
+      "Bash(pnpm create:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm dev:*)"
     ],
     "deny": [],
     "ask": []
