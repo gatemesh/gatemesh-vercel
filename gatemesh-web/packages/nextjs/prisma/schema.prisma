@@ -1,0 +1,183 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(CUSTOMER)
+  password      String?   // Hashed password for credentials provider
+  
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+  subscription  Subscription?
+  nodes         Node[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  SALES
+  INSTALLER
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  price       Int      // Price in cents
+  bom         Int      // Bill of materials cost in cents
+  category    String
+  
+  specs       Json     // Technical specifications
+  features    String[]
+  images      String[]
+  
+  inStock     Boolean  @default(true)
+  featured    Boolean  @default(false)
+  
+  stripeProductId String? @unique
+  stripePriceId   String? @unique
+  
+  orderItems  OrderItem[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  
+  status          OrderStatus @default(PENDING)
+  total           Int         // Total in cents
+  shippingAddress Json
+  
+  stripePaymentIntentId String? @unique
+  
+  items           OrderItem[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  
+  quantity  Int
+  price     Int     // Price at time of order in cents
+  
+  createdAt DateTime @default(now())
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  user               User               @relation(fields: [userId], references: [id])
+  
+  tier               SubscriptionTier
+  status             SubscriptionStatus
+  
+  stripeCustomerId       String? @unique
+  stripeSubscriptionId   String? @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum SubscriptionTier {
+  COMMUNITY
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+  UNPAID
+}
+
+model Node {
+  id       String @id @default(cuid())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id])
+  
+  nodeId   String @unique  // Physical node ID
+  name     String
+  nodeType String
+  
+  // From existing config app
+  meshRole String
+  farmId   String?
+  zoneId   String?
+  fieldId  String?
+  
+  config   Json    // All configuration data
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
