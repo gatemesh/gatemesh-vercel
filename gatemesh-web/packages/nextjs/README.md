@@ -1,8 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GateMesh E-Commerce Platform
+
+This is the GateMesh e-commerce platform built with [Next.js](https://nextjs.org), featuring a complete product catalog, pricing system, Stripe integration, and NextAuth authentication.
+
+## Features
+
+- **Product Catalog**: Complete mesh networking device catalog with 6 categories
+- **E-Commerce**: Shopping cart, Stripe payments, subscription management
+- **Authentication**: NextAuth with Google, GitHub, Email, and Credentials providers
+- **Responsive Design**: Tailwind CSS v4 with earth-tone styling
+- **Modern Stack**: Next.js 15.5.4, TypeScript, Prisma ORM, Zustand state management
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies and set up your environment:
+
+```bash
+npm install
+```
+
+Copy the environment file and configure your settings:
+```bash
+cp .env.example .env.local
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -15,10 +36,6 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
