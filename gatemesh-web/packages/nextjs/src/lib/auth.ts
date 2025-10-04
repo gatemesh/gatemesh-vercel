@@ -1,52 +1,13 @@
 import { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import GoogleProvider from 'next-auth/providers/google';
-import GitHubProvider from 'next-auth/providers/github';
-import EmailProvider from 'next-auth/providers/email';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from './prisma';
 import bcrypt from 'bcryptjs';
 
-const providers = [];
-
-// Only add providers if their credentials are configured
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
-  providers.push(
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    })
-  );
-}
-
-if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
-  providers.push(
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    })
-  );
-}
-
-if (process.env.EMAIL_SERVER_HOST && process.env.EMAIL_FROM) {
-  providers.push(
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: parseInt(process.env.EMAIL_SERVER_PORT || '587'),
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
-    })
-  );
-}
-
-// Always include credentials provider for email/password login
-providers.push(
-  CredentialsProvider({
+export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    CredentialsProvider({
       name: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
@@ -83,12 +44,8 @@ providers.push(
           image: user.image,
         };
       },
-    })
-);
-
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
-  providers,
+    }),
+  ],
   session: {
     strategy: 'jwt',
   },
