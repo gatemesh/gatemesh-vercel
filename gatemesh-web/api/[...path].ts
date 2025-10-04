@@ -20,8 +20,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const headers: Record<string, string> = {};
     for (const [k, v] of Object.entries(req.headers)) {
       if (['host', 'content-length', 'connection'].includes(k.toLowerCase())) continue;
-      const sv = Array.isArray(v) ? v.join(',') : v ?? '';
-      headers[k] = sv;
+      const sv = Array.isArray(v) ? v.join(',') : (v ?? '');
+      headers[k] = String(sv);
     }
 
     const init: RequestInit = {
