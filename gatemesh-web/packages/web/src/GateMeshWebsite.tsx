@@ -118,7 +118,7 @@ const GateMeshWebsite = () => {
       price: 149,
       image: '💧',
       description: 'Precise water level monitoring with mesh networking',
-      features: ['0.5% accuracy', '500m range', 'Battery: 2 years', 'Weatherproof IP67']
+      features: ['0.5% accuracy', '10km mesh range', 'Battery: 2 years', 'Weatherproof IP67']
     },
     {
       id: 2,
@@ -270,7 +270,7 @@ const GateMeshWebsite = () => {
                   <div className="text-earth-600">Node Types</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-primary-700">500m</div>
+                  <div className="text-3xl font-black text-primary-700">10km</div>
                   <div className="text-earth-600">Mesh Range</div>
                 </div>
                 <div>
@@ -447,7 +447,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar + 18650 backup (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Position encoder, flow feedback',
           rating: 'IP67 weatherproof'
         }
@@ -468,7 +468,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar + backup (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: '8-channel relay, flow meters',
           rating: 'IP67 outdoor rated'
         }
@@ -489,7 +489,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered with UPS backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Current, pressure, flow',
           rating: 'IP65 with NEMA enclosure'
         }
@@ -510,7 +510,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '2x AA batteries (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Ultrasonic distance, temperature',
           rating: 'IP67 submersible'
         }
@@ -531,7 +531,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (18 months)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Hall effect turbine',
           rating: 'IP68 inline mount'
         }
@@ -552,7 +552,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '2x AA (18 months) or solar',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Capacitive moisture, thermistor',
           rating: 'IP68 buried installation'
         }
@@ -573,7 +573,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Piezo pressure transducer',
           rating: 'IP67 threaded mount'
         }
@@ -594,7 +594,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered (continuous)',
-          range: '500m mesh + weather router',
+          range: '10km mesh + weather router',
           sensors: '8-in-1 weather sensor suite',
           rating: 'IP67 pole mount'
         }
@@ -615,7 +615,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar + 18650 backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Position encoder, current sense',
           rating: 'IP67 weatherproof'
         }
@@ -636,7 +636,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered + backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Servo position, flow meter',
           rating: 'IP67 inline installation'
         }
@@ -657,7 +657,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Current clamp, voltage sense',
           rating: 'NEMA 4X enclosure'
         }
@@ -680,7 +680,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '2x AA (18 months)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Ultrasonic, temperature, TDS',
           rating: 'IP67 trough mount'
         }
@@ -701,7 +701,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Ultrasonic or load cell',
           rating: 'IP65 outdoor mount'
         }
@@ -722,7 +722,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Rechargeable (30 days)',
-          range: '500m mesh + GPS',
+          range: '10km mesh + GPS',
           sensors: 'GPS, accelerometer, temp',
           rating: 'IP68 collar mount'
         }
@@ -743,7 +743,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Rechargeable (21 days)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'IR temp, accelerometer, HR',
           rating: 'IP68 ear tag mount'
         }
@@ -764,7 +764,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar + backup (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Load cell, servo motor',
           rating: 'IP65 feeder mount'
         }
@@ -785,7 +785,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered + UPS',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Position encoder, IR safety',
           rating: 'IP54 barn installation'
         }
@@ -806,7 +806,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Flow meter, RFID, temp',
           rating: 'Food-grade IP69K'
         }
@@ -827,7 +827,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: '4x load cells, RFID reader',
           rating: 'IP67 outdoor platform'
         }
@@ -850,7 +850,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Powered by generator',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Temp, fuel, current, voltage',
           rating: 'IP54 engine mount'
         }
@@ -871,7 +871,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '12V vehicle power',
-          range: '500m mesh + GPS',
+          range: '10km mesh + GPS',
           sensors: 'GPS, OBD-II, fuel flow',
           rating: 'IP65 cab mount'
         }
@@ -892,7 +892,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Powered by solar system',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Voltage, current, irradiance',
           rating: 'IP67 panel mount'
         }
@@ -913,7 +913,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Ultrasonic, temperature',
           rating: 'IP67 explosion-proof'
         }
@@ -934,7 +934,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Pressure, temp, vibration',
           rating: 'IP54 shop installation'
         }
@@ -955,7 +955,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Powered by monitored bank',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Voltage (12 channels), current',
           rating: 'IP54 battery enclosure'
         }
@@ -976,7 +976,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Current clamp, arc sensor',
           rating: 'IP54 shop mount'
         }
@@ -999,7 +999,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (18 months)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Thermistor array, moisture',
           rating: 'IP65 hay probe'
         }
@@ -1020,7 +1020,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered + UPS',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Temp, humidity, light, CO2',
           rating: 'IP54 greenhouse mount'
         }
@@ -1041,7 +1041,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar + backup (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Temp cable, moisture probe',
           rating: 'IP65 bin mount'
         }
@@ -1062,7 +1062,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered + backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Light, temp, humidity, door',
           rating: 'IP54 coop installation'
         }
@@ -1083,7 +1083,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered + battery backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Precision thermistor, door contact',
           rating: 'IP54 freezer rated (-40°C)'
         }
@@ -1104,7 +1104,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered or 18650',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'BME680 (temp, humidity, gas)',
           rating: 'IP40 indoor mount'
         }
@@ -1127,7 +1127,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Camera, PIR motion, counter',
           rating: 'IP67 field mount'
         }
@@ -1148,7 +1148,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered + backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Multispectral camera, light',
           rating: 'IP67 crop canopy mount'
         }
@@ -1169,7 +1169,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '2x AA (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'IR leaf temp, ambient temp, humidity',
           rating: 'IP67 crop level mount'
         }
@@ -1190,7 +1190,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered + backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Temp, humidity, light (3 levels)',
           rating: 'IP67 canopy mount'
         }
@@ -1211,7 +1211,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: '18650 lithium (2 years)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Capacitive wetness grid',
           rating: 'IP67 leaf-level mount'
         }
@@ -1234,7 +1234,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'Solar powered (continuous)',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Load cell, temp, humidity, mic',
           rating: 'IP67 hive mount'
         }
@@ -1255,7 +1255,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered + UPS',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'pH, DO, temp, NH3/NO2',
           rating: 'IP68 submersible probes'
         }
@@ -1276,7 +1276,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'pH, EC, temp, level',
           rating: 'IP68 probe, IP54 controller'
         }
@@ -1297,7 +1297,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Temp, humidity, CO2, light',
           rating: 'IP54 grow room mount'
         }
@@ -1348,7 +1348,7 @@ const GateMeshWebsite = () => {
         ],
         specs: {
           battery: 'AC powered + battery backup',
-          range: '500m mesh',
+          range: '10km mesh',
           sensors: 'Precision PT100, level, current',
           rating: 'Food-grade IP69K'
         }
@@ -1671,7 +1671,7 @@ const GateMeshWebsite = () => {
               </div>
               <h3 className="text-xl font-bold text-earth-900 mb-3">Mesh Networking</h3>
               <p className="text-earth-600">
-                Nodes communicate with each other, extending range up to 500m per hop. No need for cellular coverage or WiFi in every field.
+                Nodes communicate with each other, extending range up to 10km per hop. No need for cellular coverage or WiFi in every field.
               </p>
             </div>
             <div className="text-center p-6">
@@ -1839,7 +1839,7 @@ const GateMeshWebsite = () => {
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-bold text-earth-900 mb-2">How far can the mesh network reach?</h3>
-              <p className="text-earth-700">Each node can communicate up to 500m with line-of-sight. The mesh network extends this infinitely by hopping through router nodes. Most farms need 1 router per 1000 acres.</p>
+              <p className="text-earth-700">Each node can communicate up to 10km with line-of-sight. The mesh network extends this infinitely by hopping through router nodes. Most farms need 1 router per 1000 acres.</p>
             </div>
             <div>
               <h3 className="text-lg font-bold text-earth-900 mb-2">Do I need cellular or WiFi coverage?</h3>
