@@ -46,6 +46,3 @@ temp/
 
 # Vercel
 .vercel
-
-# Windows reserved name phantom file; prevents git add failures on Windows
-packages/web/NUL
